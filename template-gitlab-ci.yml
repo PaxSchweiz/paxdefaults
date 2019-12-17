@@ -1,0 +1,33 @@
+#-------------------------------------------------------------------------------
+#  Copyright 2017 Pax, Schweizerische Lebensversicherungs-Gesellschaft AG
+#
+#  Licensed under the Pax License, Version 1.0 (the "License");
+#-------------------------------------------------------------------------------
+#
+# @Description
+# gitlab continouos integration script - can compile/test or build a docker
+image: docker:latest
+# When using dind, it's wise to use the overlayfs driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay
+  # Variables
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY/ise/$CI_PROJECT_NAME:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY/ise/$CI_PROJECT_NAME:latest
+services:
+- docker:dind
+before_script:
+- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+build_image:
+  tags:
+    - docker
+  #only:
+    #- tags # Build only when pushing tag (git push origin <mytag>) add a new tag (git tag <mytag> master)
+  #except:
+    #- master
+
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_TEST_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE

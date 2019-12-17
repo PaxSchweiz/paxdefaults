@@ -1,0 +1,47 @@
+#-------------------------------------------------------------------------------
+#  Copyright 2017 Pax, Schweizerische Lebensversicherungs-Gesellschaft AG
+#
+#  Licensed under the Pax License, Version 1.0 (the "License");
+#-------------------------------------------------------------------------------
+#
+# @Description
+# Dockerfile to run xyz
+#
+# docker build -t xyz:latest .
+# docker run -d --rm -p 8080:80 --name xyz xyz
+# docker run -t -i --rm -p 8081:3000 --name xyz xyz
+# docker run -t -i --rm -p 8081:3000 --entrypoint /bin/sh --name xyz xyz
+# docker exec -t -i xyz /bin/bsh
+# docker logs xyz
+# docker stop xyz
+#-------------------------------------------------------------------------------
+
+# alpine linux based image (use a alpine linux based docker whenever possible, else agree with IT Architecture)
+FROM node:9-alpine
+RUN apk --no-cache add --update bash libffi libffi-dev mongodb mongodb-tools nodejs nodejs-npm libsass libsass-dev openjdk7-jre
+
+# Debian based SLIM (use only slim) image
+#FROM node:9-slime
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#		bash git curl python3  && \
+#    rm -rf /var/lib/apt/lists/*
+
+MAINTAINER xy <xy@pax.ch>
+
+# set environment
+RUN cd && echo "alias ll='ls -la'" > .bashrc && echo "set -o vi" >> .bashrc
+
+# do you stuff here (copy files, compiling, preparing, ...)
+RUN mkdir -p /work
+COPY . /work
+
+# this is the directory where docker runs the CMD and ENTRYPOINT
+WORKDIR /work
+
+VOLUME /data
+
+# inherited by FROM image - set as needed
+# check docs on ENTRYPOINT and CMD
+# CMD will be added to the ENTRYPOINT (e.g. ENTRYPOINT is node and CMD are the arguments to node)
+EXPOSE 3000
+CMD ["npm", "run", "interactive"]
