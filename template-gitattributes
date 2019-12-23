@@ -1,0 +1,110 @@
+#-------------------------------------------------------------------------------
+#  Copyright 2019 Pax, Schweizerische Lebensversicherungs-Gesellschaft AG
+#
+#  Licensed under the Pax License, Version 1.0 (the "License");
+#-------------------------------------------------------------------------------
+#
+# @Description
+# git attributes definition
+#
+#-------------------------------------------------------------------------------
+
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# Common settings that generally should always be used with your language specific settings
+
+# Source files
+# ============
+*.pxd    text diff=python
+*.py     text diff=python
+*.py3    text diff=python
+*.pyw    text diff=python
+*.pyx    text diff=python
+*.pyz    text diff=python
+*.java   text diff=java
+*.Rdata  text
+*.Rd     text
+*.Rmd	 text
+*.R  	 text
+*.sql    text
+
+# These files are text and should be normalized (Convert crlf => lf)
+*.css           text diff=css
+*.htm           text diff=html
+*.html          text diff=html
+*.js            text
+*.properties    text
+*.xml           text
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.class         binary
+*.dll           binary
+*.ear           binary
+*.jar           binary
+*.so            binary
+*.war           binary
+
+# Documents
+*.pdf      binary
+*.md       text
+*.tex      text diff=tex
+*.csv      text eol=crlf
+*.txt      text
+
+# Jupyter notebook
+*.ipynb  text
+
+# Graphics
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.tif      binary
+*.tiff     binary
+*.ico      binary
+# SVG treated as an asset (binary) by default.
+*.svg      text
+# If you want to treat it as binary,
+# use the following line instead.
+# *.svg    binary
+*.eps      binary
+
+# Scripts
+*.bash     text eol=lf
+*.fish     text eol=lf
+*.sh       text eol=lf
+# These are explicitly windows files and should use crlf
+*.bat      text eol=crlf
+*.cmd      text eol=crlf
+*.ps1      text eol=crlf
+
+# Serialisation
+*.json     text
+*.toml     text
+*.xml      text
+*.yaml     text
+*.yml      text
+
+# Archives
+*.7z       binary
+*.gz       binary
+*.tar      binary
+*.zip      binary
+
+# Text files where line endings should be preserved
+*.patch    -text
+
+# Microsoft Visual Stuido files
+*.sln        text eol=crlf
+*.csproj     text eol=crlf
+*.vbproj     text eol=crlf
+*.vcxproj    text eol=crlf
+*.vcproj     text eol=crlf
+
+#
+# Exclude files from exporting
+#
+.gitattributes export-ignore
+.gitignore     export-ignore
