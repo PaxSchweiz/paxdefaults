@@ -94,8 +94,9 @@ coverage
 logs
 npm-debug.log*
 
-# IDE generated files - Ignore Jetbrains IDE settings
-.idea/
+# python and environment
+.venv
+.env
 
 # OS generated files #
 .DS_Store
